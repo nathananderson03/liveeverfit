@@ -1,0 +1,228 @@
+<div class="exclude" ng-controller="fitness-professionalsController">
+<div class="google-map" center="map.center" zoom="map.zoom" draggable='true' control="map.control">
+    <marker ng-repeat="professional in professionals" coords="professional.marker.coords"
+            icon="professional.marker.icon" options="professional.marker.options" events="professional.marker.events">
+        <window show="professional.marker.window.show" options="professional.marker.window.options">
+            <div>
+                <div class="closeBg"></div>
+                <div class="pro-overlay">
+                    <img class="img" ng-src="{{serverProtocal}}://{{serverURL}}/media/{{professional.img}}"/>
+                </div>
+                <a href class="pro-overlay" ui-sref="profile.view({view: $parent.professional.id})">
+                    <div class="pro-overlay-text">
+                        <div class="name">{{professional.first_name}} {{professional.last_name}}</div>
+                        <span class="location">{{professional.location}}</span> <span class="profession">{{professional.profession}}</span>
+                    </div>
+                </a>
+            </div>
+        </window>
+    </marker>
+</div>
+<div class="sidebar-bg">
+</div>
+<div class="sidebar">
+    <div class="container-fluid">
+        <div class="search-filters">
+            <h2 class="ef-header">fitness professional</h2>
+
+            <div class="form" role="form">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Type</label>
+
+                            <div class="row">
+                                <div class="col-sm-4 col-lg-4">
+                                    <button id="Trainer" type="button"
+                                            class="col-xs-12 btn toggle proffesional"
+                                            ng-class="{selected: professionSelected['Trainer']}"
+                                            ng-click="professionOnClick('Trainer')">
+                                        <span class="fa fa-user pull-right"></span>Trainers
+                                    </button>
+                                </div>
+                                <div class="col-sm-4 col-lg-4">
+                                    <button id="Nutritionist" type="button"
+                                            class="col-xs-12 btn toggle proffesional"
+                                            ng-class="{selected: professionSelected['Nutritionist']}"
+                                            ng-click="professionOnClick('Nutritionist')">
+                                        <span class="fa fa-heart pull-right"></span>Nutritionists
+                                    </button>
+                                </div>
+                                <div class="col-sm-4 col-lg-4">
+                                    <button id="Instructor" type="button"
+                                            class="col-xs-12 btn toggle proffesional"
+                                            ng-class="{selected: professionSelected['Instructor']}"
+                                            ng-click="professionOnClick('Instructor')">
+                                        <span class="fa fa-heart pull-right"></span>Instructors
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Location</label>
+
+                            <div class="row">
+                                <div class="col-sm-8 col-md-12 col-lg-8">
+                                    <div class="form-space">
+                                        <input id="location" type="text" class="placeholder-light form-control"
+                                               placeholder="Example: Houston, TX" autocomplete="off"
+                                               ng-model="location"
+                                               typeahead="location for location in locations | filter:$viewValue | limitTo:8"
+                                               typeahead-on-select="locationOnChange()"/>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 col-md-12 col-lg-4">
+                                    <div class="form-space">
+                                        <button id="findMe" ng-click="findMe()" type="button"
+                                                class="col-xs-12 btn btn-primary">
+                                            Find Me
+                                            <span class="fa" ng-class="{'fa-compass': !findMeLoading, 'fa-circle-o-notch fa-spin': findMeLoading}"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Gender</label>
+
+                            <div class="row">
+                                <div class="col-xs-6 col-md-12 col-lg-6">
+                                    <div class="form-space">
+                                        <button id="M" type="button" class="col-xs-12 btn toggle gender placeholder-light"
+                                                ng-class="{selected: genderSelected['M']}"
+                                                ng-click="genderOnClick('M')">
+                                            <span class="fa fa-male pull-right"></span>Male
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 col-md-12 col-lg-6">
+                                    <div class="form-space">
+                                        <button id="F" type="button" class="col-xs-12 btn toggle gender placeholder-light"
+                                                ng-class="{selected: genderSelected['F']}"
+                                                ng-click="genderOnClick('F')">
+                                            <span class="fa fa-female pull-right"></span>Female
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Specialties</label>
+
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="form-space">
+                                        <tags-input id="specialties" type="text" class="tags-input placeholder-light"
+                                                    placeholder="Example: Crossfit, Nutrition"
+                                                    ng-model="specialtySearch" display-property="name"
+                                                    on-tag-removed="onDeleteTag($tag)"
+                                                    on-tag-added="onTagAdd($tag)" add-from-autocomplete-only="true">
+                                            <auto-complete source="loadSpecialty($query)"
+                                                           min-length="1"></auto-complete>
+                                        </tags-input>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Accepting Clients</label>
+
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="form-space">
+                                        <span class="select-moz">
+                                            <select ng-model="accepting" ng-change="filter()" id="accepting"
+                                                    type="text" class="form-control placeholder-light">
+                                                <option value="Both">Both</option>
+                                                <option value="true">Yes</option>
+                                                <option value="false">No</option>
+                                            </select>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Popular Specialties</label>
+
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <span ng-repeat="tag in tags.results"
+                                          class="tag tag-blue tag-click placeholder-light"
+                                          ng-click="addTag(tag)">
+                                        {{tag.name}}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.search-filters -->
+        <div id="trainer-results">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-3"
+                     ng-repeat="professional in professionals" ng-mouseover="proMouseOver(professional)"
+                     ng-mouseleave="proMouseOut(professional)"  ui-sref="profile.view({view: professional.id})">
+                    <div class="thumbnail">
+
+                            <div class="pro-overlay">
+                                <img class="img"
+                                     ng-src="{{serverProtocal}}://{{serverURL}}/media/{{professional.img}}"/>
+                            </div>
+
+                        <a href class="pro-overlay" ui-sref="profile.view({view: $parent.professional.id})">
+
+                            <div class="clients">
+                                <i ng-class="{'fa fa-circle fa-2x red': (profile_user.is_accepting == false)}" title="Not acepting Clients"></i>
+                                <i ng-class="{'fa fa-circle fa-2x green': (profile_user.is_accepting == true)}" title="Acepting Clients"></i>
+                            </div>
+
+                            <div class="pro-overlay-text">
+                                <div class="name">
+                                    {{professional.first_name}} {{professional.last_name}}
+                                </div>
+                                <div class="location">
+                                    {{professional.location}}
+                                </div>
+                                <div class="profession">
+                                    {{professional.profession}}
+                                </div>
+                            </div>
+
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <button ng-show="next" id="showMore" type="button" class="btn btn-primary btn-lg btn-block"
+                            ng-click="getPros()">Show More
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- /.trainer-results -->
+    </div>
+</div><!-- /.sidebar-->
+<div ng-include="'/fanatics/index.html'"> </div>
+</div>

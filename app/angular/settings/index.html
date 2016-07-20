@@ -1,0 +1,178 @@
+<div id="accountSettingsBg"></div>
+<div id="accountSettingsPage">
+    <div class="container" ng-switch="profile_user.type">
+        <h2 class="ef-header">
+            settings
+        </h2>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-4">
+                        <a ng-click="photoChange()" class="thumbnail">
+                            <img ng-src="{{serverProtocal}}://{{serverURL}}/media/{{profile_user.img}}" />
+                        </a>
+                    </div>
+                    <div class="col-xs-12 col-sm-8">
+                        <div class="entry-title">
+                            <div ng-show="editable.$visible">first name</div>
+                            <span editable-text="profile_user.first_name"
+                                  e-form="editable">
+                                {{ profile_user.first_name }}&ZeroWidthSpace;
+                            </span>
+
+                            <div ng-show="editable.$visible">last name</div>
+                            <span editable-text="profile_user.last_name"
+                                  e-form="editable">
+                                {{ profile_user.last_name }}&ZeroWidthSpace;
+                            </span>
+
+                            <div ng-hide="editable.$visible">
+                                Date joined: {{ profile_user.date_joined | date:"MMM dd, yyyy" }}
+                            </div>
+
+                            <div ng-show="editable.$visible">Primary Address</div>
+                            <span editable-text="tempAddress.formatted_address"
+                                  e-form="editable" 
+                                  class="placeholder-light"
+                                  e-typeahead="address for address in getLocation($viewValue)"
+                                  e-typeahead-loading="loadingLocations"
+                                  e-typeahead-on-select="setAddress($data)" >
+                                {{ tempAddress.formatted_address }}&ZeroWidthSpace;
+                            </span>
+                            
+                       
+                            <!-- <div ng-show="editable.$visible">
+                                <span class="bold">
+                                    Primary Address
+                                </span>
+                                <input id="address" type="text" ng-model="tempAddress.formatted_address"
+                                       typeahead="address for address in getLocation($viewValue)"
+                                       typeahead-loading="loadingLocations"
+                                       typeahead-on-select="setAddress()" class="form-control"
+                                       required>
+
+                                <input ng-show="editable.$visible" type="text" class="form-control" name="firstName" id="firstName"
+                                       placeholder="{{profile_user.primary_address.street_line2}}"
+                                       ng-change="setAddress()"
+                                       ng-model="tempAddress.street_line2">
+                                 <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+                            </div> -->
+                        </div>
+
+                        <div class="row seperate-bottom">
+                            <div class="col-xs-12">
+                                <div  ng-hide="editable.$visible" class="row">
+                                    <div class="col-xs-12">
+                                        <span class="bold">
+                                            <span class="fa fa-envelope"></span> Email:
+                                        </span>
+                                        <a id="email"
+                                           ng-click='emailChange()'
+                                           class="edit-text placeholder-light"
+                                           data-title="Email"
+                                           data-type="email">{{ profile_user.email }}
+                                        </a>
+                                    </div>
+                                </div>
+                                <div ng-hide="editable.$visible" class="row edit-password-info">
+                                    <div class="col-xs-12">
+                                        <span class="bold placeholder-light">
+                                            &NonBreakingSpace;<span class="fa fa-lock"></span> Password:
+                                        </span>
+                                        <span class="edit-password placeholder-light" ng-click='passwordChange()'>Change</span>
+                                    </div>
+                                </div>
+                                 <div ng-if="profile_user.type == 'professional'" class="row" style="padding-top: 13px;">
+                                    <div class="col-xs-12"
+                                    popover-trigger="mouseenter" popover-placement="bottom" popover="Check this box to illuminate the green light on your proflile page meaning you are accepting clients.">
+                                        <span class="bold">
+                                            <span editable-checkbox="profile_user.is_accepting" class="placeholder-light" e-form="editable" e-title="Accept clients?">
+                                                <span class="fa" ng-class="{'fa-check': profile_user.is_accepting, 'fa-times': !profile_user.is_accepting}"></span> {{ profile_user.is_accepting && "Accepting clients" || "Not accepting clients" }}
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12"
+                                    popover-trigger="mouseenter" popover-placement="bottom" popover="We love diversity within the EverFit Community! Tell us what makes you, you!  Where are you from? Why did you get into fitness? How long have you been inspiring?  What's you pets name?  Your fellow Fanatics what to know! Don't be shy!"
+                                    >
+                                        <span class="bold">
+                                            <span class="fa fa-empire"></span> Bio:
+                                        </span>
+                                        <br ng-show="editable.$visible">
+                                        <span id="bio" class="edit-text placeholder-light" data-title="Biography"
+                                              data-type="text" editable-textarea="profile_user.bio" e-form="editable">
+                                            {{ profile_user.bio | limitTo: 20 }}
+                                        </span>
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <span ng-show="profile_user.type == 'professional'" class="bold">
+                                            <span class="fa fa-tags"></span> Specialties:
+                                        </span>
+                                        <span ng-show="profile_user.type != 'professional'"class="bold">
+                                            <span class="fa fa-tags"></span> Interests:
+                                        </span>
+                                        <br >
+                                        <div ng-show="editable.$visible">
+                                            <tags-input class="tags-input placeholder-light" add-from-autocomplete-only="false"
+                                                        ng-model="profile_user.tags" on-tag-removed="onDeleteTag($tag)"
+                                                        on-tag-added="onTagAdd($tag)" display-property="name">
+                                            <auto-complete source="loadSpecialty($query)" min-length="1"></auto-complete>
+                                            </tags-input>
+                                        </div>
+                                        <div ng-show="!editable.$visible" ng-repeat="tag in profile_user.tags" class="tag tag-blue tag-click ng-scope ng-binding">
+                                            {{tag.name}}
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-hide="editable.$visible" class="row" style="padding-top: 13px;">
+                                    <div class="col-xs-12"
+                                    popover-trigger="mouseenter" popover-placement="bottom" popover="This link is unique to you and can be used to earn yourself rewards simply by sharing with others via email, social media, or however you best see fit! Once someone clicks your link and creates an account, they're then connected to you indefinitely!">
+                                        <span class="bold">
+                                            <span class="fa fa-share-square"></span>
+                                            <span ng-show="profile_user.type == 'user'"> Referral Link:</span>
+                                            <span ng-show="profile_user.type == 'professional'" class="bold">Share Link:</span>
+                                            <input type="text" class="editable-input placeholder-light form-control ng-pristine" value="{{restProtocol}}://{{webURL}}/#/?referral={{profile_user.email}}" />
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <form editable-form name="editable" ng-show="editable.$visible" onbeforesave="updateProfile()">
+                            <button type="submit" ng-click="" ng-disabled="editable.$waiting" class="btn btn-success">
+                                save
+                            </button>
+                            <button type="button" ng-disabled="editable.$waiting" ng-click="editable.$cancel()"
+                                    class="btn btn-danger">
+                                cancel
+                            </button>
+                        </form>
+                        <button class="btn btn-primary" ng-show="!editable.$visible" ng-click="editable.$show()">
+                            edit my information
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6"
+                 ng-switch-when="professional">
+                <div ng-include
+                     src="'settings/views/socialMedia.html'"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12"
+                 ng-switch-when="professional">
+                <div ng-include
+                     src="'settings/views/certifications.html'"></div>
+            </div>
+        </div>
+        <div ng-switch-when="upgraded">
+
+        </div>
+        <div ng-include src="'settings/views/membership.html'"></div>
+    </div>
+</div>
+

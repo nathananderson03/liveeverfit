@@ -1,0 +1,46 @@
+<div id="groupsBg"></div>
+<div id="groups" ng-controller="groupsController">
+    <div class="container" ng-if="group">
+        <!--<div class="header">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12 col-md-6">
+                    <h2 class="ef-header">{{group}}</h2>
+                </div>
+            </div>
+        </div>-->
+        <div class="meta-banner">
+            <img src="groups/img/{{group}}.png" onerror='this.style.display = "none"'/>
+        </div>
+    <tabset justified="true" type="pills">
+        <tab heading="feed" select="filter('')" active="$parent.$parent.feedActive"></tab>
+        <tab heading="fanatics" select="getFanatics()">
+            <div class="list-group">
+                <a ng-repeat="fan in fanatics"
+                   ui-sref-active="active"
+                   ui-sref="profile.view({view: fan.id})"
+                   class="list-group-item">
+                    <div class="media">
+                        <img class="media-object pull-left"
+                             ng-src="{{serverProtocal}}://{{serverURL}}/media/{{fan.img}}" style="width: 18px; height: 18px;">
+                        <div class="media-body">
+                            <div class="col-xs-12 col-sm-9">
+                                <b style="color:#fff;">{{fan.first_name}} {{fan.last_name}}</b>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </tab>
+        <tab heading="texts" select="filter('text')"></tab>
+        <tab heading="photos" select="filter('photo')"></tab>
+        <tab heading="videos" select="filter('video')"></tab>
+        <tab heading="blogs" select="filter('blog')"></tab>
+        <tab heading="events" select="filter('event')"></tab>
+    </tabset>
+    <!-- /.filters -->
+    <div ng-if="feed.show" entry-feed ng-model="$parent.$parent.feed"></div>
+
+    </div>
+    <!-- /.container -->
+    <div ng-include="'/fanatics/index.html'"> </div>
+</div><!-- /#profile -->

@@ -1,0 +1,211 @@
+<div id="profileBg">
+</div>
+<div id="profile" ng-controller="profileController">
+    <div class="container" ng-if="profile_user">
+            <div class="header">
+                <div class="row">
+                    <div class="col-sm-6 col-xs-12 col-md-6">
+                        <h2 class="ef-header">{{profile_user.first_name}} {{profile_user.last_name}}
+                            <small> / {{profile_user.location}}</small>
+                        </h2>
+                    </div>
+                    <div ng-if="profile_user.type == 'professional'" class="col-sm-offset-2 col-md-offset-0 col-sm-2 col-xs-6 col-md-3">
+                        <div class="status-profile" style="text-align: center">
+                            live training in session
+                            <span class="profile-circle red"></span>
+                        </div>
+                    </div>
+                    <div ng-if="profile_user.type == 'professional'" class="col-sm-2 col-xs-6 col-md-3">
+                        <div class="status-profile" style="text-align: center">
+                            accepting clients
+                            <span class="profile-circle"
+                               ng-class="{'red': !profile_user.is_accepting, 'green': profile_user.is_accepting}"></span>
+                        </div>
+                    </div>
+                    <div style="position: relative;">
+                         <button class="btn btn-primary btn-tour" ng-click="startTour()">take tour</button>
+                    </div>
+                </div>
+            </div>
+        <div class="meta-banner">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="profile-left">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <div class="profile-picture">
+                                    <img ng-src="{{serverProtocal}}://{{serverURL}}/media/{{profile_user.img}}" class=""/>
+                                </div>
+                                <!-- /.profile-picture -->
+                            </div>
+                            <!-- /.col-md-6 -->
+                            <div class="col-sm-4">
+                                <img ng-if="profile_user.profession"
+                                     ng-src="profile/img/{{profile_user.profession}}.png"/>
+                                <img ng-if="!profile_user.profession"
+                                     ng-src="profile/img/user.png"/>
+                            </div>
+                            <!-- /.col-md-6 -->
+                        </div>
+                        <!-- /.row -->
+
+                        <div class="specialties">
+                            <h3 class="ef-header" style="margin: 8px 0;">specialties</h3>
+                            <div tag-specialties class="tag-specialties" ng-model="profile_user.tags"></div>
+                        </div>
+                        <!-- /.specialties-->
+                    </div>
+                    <!-- /.profile-left -->
+                </div>
+                <!-- /.col-md-4 -->
+                <div class="col-md-8">
+                    <div style="position:absolute; top: 300px; left: 0;"
+                         step-text="Use the settings button here to change your profile pic, update your address, and manage your coaching!"
+                         step-index="4"
+                         step-placement="top"></div>
+                    <div class="profile-banner">
+                        <div class="image-overlay">
+                            <div class="buttons pull-left">
+                                <a href ng-if="user_id == profile_user.id" class="message" ui-sref="settings">
+                                    <i class="fa fa-cog"></i>
+                                    settings
+                                </a>
+                                <a href ng-if="user_id != profile_user.id && profile_user.user_connected"
+                                   class="message" ui-sref="messages.view({view:'new'})">
+                                    <i class="fa fa-envelope"></i>
+                                    message
+                                </a>
+                                <a href
+                                   ng-if="user_id != profile_user.id && !profile_user.user_connected && profile_user.user_can_connect && profile_user.is_accepting && profile_user.type == 'professional' && user_type != 'professional'"
+                                   ng-click="connect()" class="connect">
+                                    <i class="fa fa-envelope"></i>
+                                    Train with me
+                                </a>
+                                <a href ng-if="profile_user.invite" class="invite">
+                                    <i class="fa fa-exchange"></i>
+                                    Invite
+                                </a>
+                                <a href ng-if="user_id != profile_user.id && !profile_user.user_follows" class="follow"
+                                   ng-click="followToggle()">
+                                    <i class="fa fa-exchange"></i>
+                                    Follow
+                                </a>
+                                <a href ng-if="user_id != profile_user.id && profile_user.user_follows" class="follow"
+                                   ng-click="followToggle()">
+                                    <i class="fa fa-exchange"></i>
+                                    Unfollow
+                                </a>
+                                <a href ng-if="user_id != profile_user.id && !profile_user.user_blocks" class="follow"
+                                   ng-click="blockToggle()">
+                                    <i class="fa fa-exchange"></i>
+                                    Block
+                                </a>
+                                <a href ng-if="user_id != profile_user.id && profile_user.user_blocks" class="follow"
+                                   ng-click="blockToggle()">
+                                    <i class="fa fa-exchange"></i>
+                                    Unblock
+                                </a>
+                            </div>
+                            <!-- /.buttons -->
+                            <div class="report pull-right">
+                                    <div>
+                                        likes
+                                        <div class="number">
+                                            {{profile_user.likes}}
+                                        </div>
+                                    </div>
+                                    <div>
+                                        inspiration
+                                        <div class="number">
+                                            {{profile_user.inspiration}}
+                                        </div>
+                                    </div>
+                                    <div ng-show="profile_user.clients">
+                                        clients
+                                        <div class="number">
+                                            {{profile_user.clients}}
+                                        </div>
+                                    </div>
+                                    <div>
+                                        fanatics
+                                        <div class="number">
+                                            {{profile_user.fanatics}}
+                                        </div>
+                                    </div>
+                            </div>
+                            <!-- /.report -->
+                            <div style="clear:both;"></div>
+                        </div>
+                        <!-- /.image-overlay -->
+                    </div>
+                </div>
+                <!-- /.col-md-8 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.meta-banner -->
+        <div style="position: relative; width: 100%;">
+            <div style="position: absolute; left: 200px; top: 0px;"
+                    step-text="Inspire your community of fanatics by sharing your transformation pics!"
+                    step-index="10"
+                    step-placement="top"></div>
+            <div    style="position: absolute; right: 190px; top: 34px;"
+                    step-text="Use your calendar to log events, track your workouts, and keep track of appointments and more!"
+                    step-index="11"
+                    step-placement="left"></div>
+            <div    style="position: absolute; right: 90px; top: 34px;"
+                    step-text="Think one person can’t make a difference? See who you are inspiring across the nation! "
+                    step-index="12"
+                    step-placement="left"></div>
+        </div>
+
+        <tabset step-text="Filter your feed via text, photos videos, blogs and events!"
+                step-index="1"
+                step-placement="top"
+                justified="true" type="pills">
+            <tab heading="feed" select="filter('')" active="$parent.$parent.feedActive"></tab>
+            <tab heading="bio" select="filter('exempt')">
+                <div class="google-map-outer">
+                    <div class="bio">
+                        <h2 class="ef-header">bio</h2>
+
+                        <div ng-if="!profile_user.bio">No bio.</div>
+                        {{profile_user.bio}}
+                    </div>
+                </div>
+            </tab>
+            <tab heading="transformation" select="filter('transformation')"></tab>
+            <tab heading="texts" select="filter('text')"></tab>
+            <tab heading="photos" select="filter('photo')"></tab>
+            <tab heading="videos" select="filter('video')"></tab>
+            <tab heading="blogs" select="filter('blog')"></tab>
+            <tab heading="events" select="filter('event')"></tab>
+            <tab heading="clients" select="clientFilter()"
+                 ng-if="user_id == profile_user.id && profile_user.type == 'professional'"></tab>
+            <tab heading="calendar" select="initCalendar()">
+                <div ng-if="profile_user.id && showCalendar" class="google-map-outer">
+                    <div profile-calendar ng-model="profile_user.id"></div>
+                </div>
+            </tab>
+            <tab heading="reach" select="initReach()">
+                <div class="google-map-outer">
+                    <div class="google-map" center="map.center" zoom="map.zoom" draggable='true' control="map.control"
+                         options="map.options">
+                        <marker ng-repeat="referral in profile_user.referrals"
+                                coords="{latitude: referral.lat, longitude: referral.lng}"
+                                icon="referralIcon" events="{click: referral.click}">
+                        </marker>
+                    </div>
+                    <div class="referrals">
+                        referrals
+                        <br>
+                        <i class="fa fa-hand-o-up fa-lg ever-blue"></i><span>{{profile_user.referrals.length}}</span>
+                    </div>
+                </div>
+            </tab>
+        </tabset>
+        <!-- /.filters -->
+        <div ng-if="feed.show" entry-feed ng-model="$parent.$parent.feed"></div>
+        </div><!-- /.container -->
+        <div ng-include="'/fanatics/index.html'"></div>
+</div><!-- /#profile -->

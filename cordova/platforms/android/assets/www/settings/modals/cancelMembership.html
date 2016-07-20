@@ -1,0 +1,16 @@
+<form class="form-horizontal" name="membershipForm">
+    <div class="modal-header">
+        <h3 class="modal-title">Change Email</h3>
+    </div>
+    <div class="modal-body">
+        <alert ng-repeat="(error, msg) in message" type="success" close="closeAlert(error)">{{msg[0]}}</alert>
+        <label for="name">
+            You are about to cancel your membership. Are you sure?
+        </label>
+        
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success" type="submit" ng-click="ok(email)">ok</button>
+        <button class="btn btn-danger" ng-click="cancel()">cancel</button>
+    </div>
+</form>

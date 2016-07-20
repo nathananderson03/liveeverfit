@@ -1,0 +1,21 @@
+<div ng-switch-when="membershipSubmitPro">
+    <div class="row">
+        <div class="col-xs-12 col-md-6 col-md-offset-3">
+            <div class="page-header">
+                <h2 class="entry-title">checking for errors</h2>
+            </div>
+            <div class="alert alert-danger" ng-repeat="(error, msg) in message">
+                {{msg[0]}}
+            </div>
+            <div ng-if="!message">
+                No Errors.
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <button ng-show="pro.profession == 'Nutritionist' || pro.profession == 'Trainer' || pro.profession == 'Instructor'" type="button" class="btn btn-primary col-xs-offset-1" ng-click="setCurrentStep('certifications')">Back</button>
+        <button ng-show="pro.profession == 'Promoter'" type="button" class="btn btn-primary col-xs-offset-1" ng-click="setCurrentStep('experience')">Back</button>
+        <button type="submit" class="btn btn-primary col-xs-offset-9" ng-click="preProSubmit()">Submit</button>
+    </div>
+</div>

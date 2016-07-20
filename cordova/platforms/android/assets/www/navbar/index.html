@@ -1,0 +1,225 @@
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <toaster-container></toaster-container>
+    <div class="container">
+        <div class="navbar-header">
+            <a ng-if="token" href class="navbar-brand" ng-click="toggleDashboard()">
+                <div class="dashboard-btn" >
+                    <i class="fa fa-bars"></i>
+                    <div    style="position:absolute; top: 55px;; left: -23px; z-index: 10000;"
+                            step-text="Check out your profile, messages, FAQ, and account settings here!"
+                            step-index="2"
+                            step-placement="bottom"></div>
+                </div>
+            </a>
+            <button type="button" class="navbar-toggle" ng-click="$parent.isCollapsed = !$parent.isCollapsed" data-toggle="collapse"
+                    data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="fa fa-bars fa-lg"></span>
+            </button>
+            <a class="navbar-brand" ng-class="{active:$uiRoute}" ui-route="/" ui-sref="home">
+                <div class="logo"></div>
+            </a>
+            <ul ng-if="token" class="nav nav-xs-icon visible-xs" ng-include src="'navbar/icons.html'"></ul>
+        </div>
+        <!--<div ng-if="!token" class="navbar-collapse collapse" collapse="isCollapsed">-->
+            <!--<ul class="nav navbar-nav">-->
+                <!--<li><a ui-sref-active="active"-->
+                       <!--ui-sref="registration">-->
+                        <!--REGISTER-->
+                <!--</a></li>-->
+            <!--</ul>-->
+        <!--</div>-->
+        <!--Logged in navbar-->
+        <div ng-if="token" class="navbar-collapse collapse" collapse="isCollapsed">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a ui-sref-active="active"
+                       ui-sref="fitness-professionals">
+                        FITNESS PROFESSIONALS
+                    </a>
+                </li>
+                <li>
+                    <a ui-sref-active="active"
+                       ui-sref="workouts">
+                        WORKOUTS
+                    </a>
+                </li>
+                <li class="dropdown">
+                    <a href class="dropdown-toggle">
+                        GROUPS <b class="caret"></b>
+                    </a>
+                    <div    style="position:absolute; top: 65px;; left: 0px; z-index: 10000;"
+                            step-text="Share your stoke with other like-minded Fanatics through all of our fitness groups! Join one, or join them all!"
+                            step-index="9"
+                            step-placement="bottom"></div>
+                    <ul class="dropdown-menu bi-column">
+                        <li ui-sref="groups({group: '{{item.name}}'})" ng-repeat="item in tagsCall.results">
+                            <a>{{item.name}}</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a ui-sref="shop" class="dropdown-toggle" data-toggle="dropdown">
+                        SHOP <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a ui-sref="shop">all</a>
+                        </li>
+                        <li class="dropdown-submenu" ng-class="{open: equipmentHover}">
+                            <a ui-sref="shop.collection({collection: 'equipment'})"
+                               ng-mouseenter="equipmentHover = true;" ng-mouseleave="equipmentHover = false;">
+                                equipment
+                            </a>
+                            <ul class="dropdown-menu" style="left: 160px;"
+                                ng-mouseenter="equipmentHover = true;" ng-mouseleave="equipmentHover = false;">
+                                <li><a ui-sref="shop.collection.type({collection: 'equipment', type: 'benches-weight-racks'})">
+                                    benches and weight racks
+                                </a></li>
+                                <li><a ui-sref="shop.collection.type({collection: 'equipment', type: 'dumbells'})">
+                                    dumbells
+                                </a>
+                                </li>
+                                <li><a ui-sref="shop.collection.type({collection: 'equipment', type: 'jumpropes'})">
+                                    jump ropes
+                                </a></li>
+                                <li><a ui-sref="shop.collection.type({collection: 'equipment', type: 'kettlebells'})">
+                                    kettle bells
+                                </a></li>
+                                <li><a ui-sref="shop.collection.type({collection: 'equipment', type: 'kickboxing'})">
+                                    kickboxing
+                                </a>
+                                </li>
+                                <li><a ui-sref="shop.collection.type({collection: 'equipment', type: 'medicine-balls'})">
+                                    medicine balls
+                                </a></li>
+                                <li><a ui-sref="shop.collection.type({collection: 'equipment', type: 'metronome-ginometer'})">
+                                    metronome &amp; ginometer
+                                </a></li>
+                                <li><a ui-sref="shop.collection.type({collection: 'equipment', type: 'misc'})">
+                                    misc
+                                </a></li>
+                                <li><a ui-sref="shop.collection.type({collection: 'equipment', type: 'speed-agility'})">
+                                    speed &amp; angility
+                                </a></li>
+                                <li><a ui-sref="shop.collection.type({collection: 'equipment', type: 'stability-balls'})">
+                                    stability balls
+                                </a></li>
+                                <li><a  ui-sref="shop.collection.type({collection: 'equipment', type: 'step-and-risers'})">
+                                    step &amp; risers
+                                </a></li>
+                                <li><a  ui-sref="shop.collection.type({collection: 'equipment', type: 'tubing-loop-tubing'})">
+                                    tubing &amp; lube tubing
+                                </a></li>
+                                <li><a ui-sref="shop.collection.type({collection: 'equipment', type: 'yoga'})">
+                                    yoga
+                                </a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a ui-sref="shop.collection({collection: 'featured-products'})">featured items</a>
+                        </li>
+                        <li>
+                            <a ui-sref="shop.collection({collection: 'supplements'})">supplements</a>
+                        </li>
+                        <li>
+                            <a ui-sref="shop.collection({collection: 'trx'})">trx</a>
+                        </li>
+                        <li>
+                            <a ui-sref="shop.collection({collection: 'esutras-organics'})">esutras</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a ng-class="{active:$uiRoute}" ui-sref="contact">
+                        CONTACT
+                    </a>
+                </li>
+                <li>
+                    <a ui-sref-active="active"
+                       ui-sref="evergreen" class="btn-evergreen">
+                    </a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav pull-right hidden-xs" ng-include src="'navbar/icons.html'"></ul>
+        </div>
+    </div>
+</div>
+<div class="dashboard" ng-if="token">
+    <div class="content" ng-class="{'open': !$parent.$parent.dashCollapsed}">
+        <ul class="nav nav-pills nav-stacked">
+            <li class="dash-title"><i class="fa fa-dashboard fa-4x"></i> DashBoard</li>
+            <li><a ui-sref="profile"><i class="fa fa-user"></i> profile</a></li>
+            <li><a ui-sref="messages"><i class="fa fa-envelope"></i> messages</a></li>
+            <li ng-if="user_type != 'professional'"><a ui-sref="verbiage"><i class="fa fa-gift"></i> stack and rack rewards program</a></li>
+            <li ng-if="user_type == 'professional'"><a ui-sref="verbiage"><i class="fa fa-money"></i> how do i make money</a></li>
+            <li ng-if="user_type != 'professional'"><a ui-sref="clients"><i class="fa fa-star"></i> online training</a></li>
+            <li ng-if="user_type == 'professional'"><a ui-sref="clients"><i class="fa fa-star"></i> what do i owe my clients</a></li>
+            <li><a ui-sref="faq"><i class="fa fa-question"></i> faq</a></li>
+            <li><a ui-sref="terms"><i class="fa fa-legal"></i> terms</a></li>
+            <li><a ui-sref="settings"><i class="fa fa-cogs"></i> settings</a></li>
+            <li><a ng-click="$parent.signOut();"><i class="fa fa-sign-out"></i> sign out</a></li>
+        </ul>
+        <div class="dash-logo">
+            <image src="navbar/img/ef-logo-nogrunge.png" style="width:55.5px;height:108px"/>
+        </div>
+        <div class="txt-inf">
+            <div><i class="fa fa-envelope"></i>info@liveeverfit.com</div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="navbar/icons.html">
+    <li>
+        <a ui-sref="shop.cart">
+            <i class="fa fa-shopping-cart fa-lg xs-i-help"></i>&ZeroWidthSpace;
+        </a>
+    </li>
+    <li>
+        <a href ng-click="pop()">
+            <i class="fa fa-bell fa-lg xs-i-help"></i>&ZeroWidthSpace;<span class="badge">{{notificationsCount}}</span>
+            <div    style="position:absolute; top: 60px; left: -15px; z-index: 10000;"
+                    step-text="See who’s interacting with your profile!"
+                    step-index="3"
+                    step-placement="bottom"></div>
+        </a>
+    </li>
+    <li>
+        <a ui-sref="profile">
+            <i class="fa fa-user fa-lg xs-i-help"></i>&ZeroWidthSpace;
+        </a>
+    </li>
+    <li class="dropdown">
+        <a href class="dropdown-toggle">
+            <i class="fa fa-cog fa-lg xs-i-help"></i> <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-right">
+            <li ng-if="user_type != 'user'">
+                <a ui-sref="messages">
+                    <i class="fa fa-envelope xs-i-help"></i> messages
+                </a>
+            </li>
+            <li>
+                <a ui-sref="faq">
+                    <i class="fa fa-question-circle"></i> faq
+                </a>
+            </li>
+            <li>
+                <a ui-sref="terms">
+                    <i class="fa fa-book"></i>  terms
+                </a>
+            </li>
+            <li>
+                <a ui-sref="settings">
+                    <i class="fa fa-cog"></i> settings
+                </a>
+            </li>
+            <li>
+                <a href ng-click="$parent.$parent.signOut();">
+                    <i class="fa fa-sign-out"></i> sign out
+                </a>
+            </li>
+        </ul>
+    </li>
+</script>
+
+

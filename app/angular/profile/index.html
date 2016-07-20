@@ -1,0 +1,273 @@
+<div id="profileBg">
+</div>
+<div id="profile" ng-controller="profileController">
+    <div class="container" ng-if="profile_user">
+            <div class="header">
+                <div class="row">
+                    <div class="col-sm-6 col-xs-12 col-md-6">
+                        <h2 class="ef-header">{{profile_user.first_name}} {{profile_user.last_name}}
+                            <small> / {{profile_user.location}}</small>
+                        </h2>
+                    </div>
+                    <div ng-if="profile_user.type == 'professional' && profile_user.profession !='Promoter'" class="col-sm-offset-2 col-md-offset-0 col-sm-2 col-xs-6 col-md-3 pull-right">
+                        <div class="status-profile" style="text-align: center">
+                            live training in session
+                            <span class="profile-circle red"></span>
+                        </div>
+                    </div>
+                    <div ng-if="profile_user.type == 'professional' && profile_user.profession != 'Promoter'" class="col-sm-2 col-xs-6 col-md-3 pull-right">
+                        <div class="status-profile" style="text-align: center">
+                            accepting clients
+                            <span class="profile-circle"
+                               ng-class="{'red': !profile_user.is_accepting, 'green': profile_user.is_accepting}"></span>
+                        </div>
+                    </div>
+                    <div style="position: relative;">
+                    <!--
+                         <button class="btn btn-primary btn-tour" ng-click="startTour()">take tour</button>-->
+                    </div>
+                </div>
+            </div>
+        <div class="meta-banner">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="profile-left">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <div class="profile-picture">
+                                    <img ng-src="{{serverProtocal}}://{{serverURL}}/media/{{profile_user.img}}" class=""/>
+                                    <span ng-if="user_id == profile_user.id"><a ng-click="photoChange()"><i class="fa fa-lg fa-camera upload"></i>
+                                    </a></span>
+                                </div>
+                                <!-- /.profile-picture -->
+                            </div>
+                            <!-- /.col-md-6 -->
+                            <div class="col-sm-4">
+                                <img ng-if="profile_user.profession"
+                                     ng-src="profile/img/{{profile_user.profession}}.png"/>
+                                <img ng-if="!profile_user.profession"
+                                     ng-src="profile/img/user.png"/>
+                            </div>
+                            <!-- /.col-md-6 -->
+                        </div>
+                        <!-- /.row -->
+
+                        <div class="specialties">
+                            <h3 class="ef-header" style="margin-top:10px;">specialties</h3>
+                            <div tag-specialties class="tag-specialties" ng-model="profile_user.tags"></div>
+                        </div>
+                        <!-- /.specialties-->
+                    </div>
+                    <!-- /.profile-left -->
+                </div>
+                <!-- /.col-md-4 -->
+                <div class="col-md-8">
+                    <div style="position:absolute; top: 300px; left: 0;"
+                         step-text="Use the settings button here to change your profile pic, update your address, and manage your coaching!"
+                         step-index="4"
+                         step-placement="top"></div>
+                    <div class="profile-banner">
+                        <div class="image-overlay">
+                            <div class="buttons pull-left">
+                                <a href ng-if="user_id == profile_user.id" class="message" ui-sref="settings">
+                                    <i class="fa fa-cog"></i>
+                                    settings
+                                </a>
+                                <a href
+                                   class="message" ui-sref="messages.view({view:'new'})">
+                                    <i class="fa fa-envelope"></i>
+                                    message
+                                </a>
+                                <span  class="dropdown">
+                                    <a href="" class="dropdown-toggle share"><i class="fa fa-share-alt"></i> share</a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href ng-click="entryAffiliate('facebook')">
+                                                <i class="fa fa-facebook"></i> facebook
+                                            </a>
+                                            <a href ng-click="entryAffiliate('linkedin')">
+                                                <i class="fa fa-linkedin"></i> linkedin
+                                            </a>
+                                            <a href ng-click="entryAffiliate('twitter')">
+                                                <i class="fa fa-twitter"></i> twitter
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </span>
+                                <div class="dropdown">
+                                    <a href
+                                       ng-if="user_id != profile_user.id && !profile_user.user_connected && profile_user.user_can_connect && profile_user.is_accepting && profile_user.type == 'professional' && user_type != 'professional'"
+                                        class="connect dropdown-toggle" data-toggle="dropdown">
+                                        <i class="fa fa-envelope"></i>Train with me
+                                    </a>
+                                      <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                        <li role="presentation">
+                                            <p>Thank you for your interest! Please email me when you would like to get started along with more information about your goals. I will respond within 48 hours. Talk to you soon!</p>
+                                            <p><a href="mailto:{{ profile_user.email }}">{{profile_user.email}}</a></p>
+                                        </li>
+                                    </ul>  
+                                </div>
+                                <a href ng-if="profile_user.invite" class="invite">
+                                    <i class="fa fa-exchange"></i>
+                                    Invite
+                                </a>
+                                <a href ng-if="user_id != profile_user.id && !profile_user.user_follows" class="follow"
+                                   ng-click="followToggle()">
+                                    <i class="fa fa-exchange"></i>
+                                    Follow
+                                </a>
+                                <a href ng-if="user_id != profile_user.id && profile_user.user_follows" class="follow"
+                                   ng-click="followToggle()">
+                                    <i class="fa fa-exchange"></i>
+                                    Unfollow
+                                </a>
+                                <a href ng-if="user_id != profile_user.id && !profile_user.user_blocks" class="follow"
+                                   ng-click="blockToggle()">
+                                    <i class="fa fa-exchange"></i>
+                                    Block
+                                </a>
+                                <a href ng-if="user_id != profile_user.id && profile_user.user_blocks" class="follow"
+                                   ng-click="blockToggle()">
+                                    <i class="fa fa-exchange"></i>
+                                    Unblock
+                                </a>
+                            </div>
+                            <!-- /.buttons -->
+                            <div class="report pull-right">
+                                    <div>
+                                        likes
+                                        <div class="number">
+                                            {{profile_user.likes}}
+                                        </div>
+                                    </div>
+                                    <div>
+                                        inspiration
+                                        <div class="number">
+                                            {{profile_user.inspiration}}
+                                        </div>
+                                    </div>
+                                    <div ng-show="profile_user.clients">
+                                        clients
+                                        <div class="number">
+                                            {{profile_user.clients}}
+                                        </div>
+                                    </div>
+                                    <div>
+                                        fanatics
+                                        <div class="number">
+                                            {{profile_user.fanatics}}
+                                        </div>
+                                    </div>
+                            </div>
+                            <!-- /.report -->
+                            <div style="clear:both;"></div>
+                        </div>
+                        <!-- /.image-overlay -->
+                    </div>
+                </div>
+                <!-- /.col-md-8 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.meta-banner -->
+        <div style="position: relative; width: 100%;">
+            <div style="position: absolute; left: 200px; top: 0px;"
+                    step-text="Inspire your community of fanatics by sharing your transformation pics!"
+                    step-index="10"
+                    step-placement="top"></div>
+            <div    style="position: absolute; right: 190px; top: 34px;"
+                    step-text="Use your calendar to log events, track your workouts, and keep track of appointments and more!"
+                    step-index="11"
+                    step-placement="left"></div>
+            <div    style="position: absolute; right: 90px; top: 34px;"
+                    step-text="Think one person can’t make a difference? See who you are inspiring across the nation! "
+                    step-index="12"
+                    step-placement="left"></div>
+        </div>
+
+        <span popover-trigger="mouseenter" popover-placement="bottom" popover="Use these buttons to filter your feed and navigate your awesome profile…click “feed” to view all of your posts in the order they were posted.">
+        <tabset step-text="Filter your feed via text, photos videos, blogs and events!"
+                step-index="1"
+                step-placement="top"
+                justified="true" type="pills">
+            <tab heading="feed" select="filter('')" active="$parent.$parent.feedActive"></tab>
+            <tab heading="bio" select="filter('exempt')">
+                <div class="google-map-outer"
+                popover-trigger="mouseenter" popover-placement="top" popover="We love diversity within the EverFit Community! Tell us what makes you, you!  Where are you from? Why did you get into fitness? How long have you been inspiring?  What's you pets name?  Your fellow Fanatics what to know! Don't be shy!">
+                    <div class="bio">
+                        <h2 class="ef-header">bio</h2>
+
+                        <div ng-if="!profile_user.bio">No bio.</div>
+                        {{profile_user.bio}}
+                    </div>
+                </div>
+            </tab>
+            <tab heading="transformation" select="filter('transformation')"></tab>
+            <tab heading="texts" select="filter('text')"></tab>
+            <tab heading="photos" select="filter('photo')"></tab>
+            <tab heading="videos" select="filter('video')"></tab>
+            <tab heading="blogs" select="filter('blog')"></tab>
+            <tab heading="events" select="filter('event')"></tab>
+            <!--<tab heading="clients" select="clientFilter()"
+                 ng-if="user_id == profile_user.id && profile_user.type == 'professional'"></tab>-->
+            <tab heading="calendar" select="initCalendar()">
+                <div ng-if="profile_user.id && showCalendar" class="google-map-outer"
+                popover-trigger="mouseenter" popover-placement="top" popover="Hey there. Fanatic! We want to give you the tools to stay on track. What better way than a calendar. Schedule your weekly workouts, log your appointments, or showcase an awesome event you want others to know about.
+This calendar is public and visible to other users.
+ ">
+                    <div profile-calendar ng-model="profile_user.id"></div>
+                </div>
+            </tab><!--
+            <tab heading="reach" select="initReach()">
+                <div class="google-map-outer"
+                popover-trigger="mouseenter" popover-placement="top" popover="Here you have your very own personal map of all your awesome Fanatics you Invited to EverFit via your 'Share Link'.  You can send your link to your folks however you fancy... email, social media, or pretty much any way you can send info. digitally! When someone clicks your link and creates an account... they magically appear here on your map! Pretty jazzy! The Reach Map is simply a fun way to visualize all your Invited Fanatics!">
+                    <div class="google-map" center="map.center" zoom="map.zoom" draggable='true' control="map.control"
+                         options="map.options">
+                        <marker ng-repeat="referral in profile_user.referrals"
+                                coords="{latitude: referral.lat, longitude: referral.lng}"
+                                icon="referralIcon" events="{click: referral.click}">
+                        </marker>
+                    </div>
+                    <div class="reach-overlay">
+                        <img src="profile/img/fanatic.png"/>
+                    </div>
+                    <div class="referrals">
+                        <div>shares</div>
+                        <svg width="38" height="38" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="rgb(26, 140, 255)" d="m22.18,35.598c-2.943001,0.304001 -5.249001,-1.25 -6.413,-3.172001c-1.439,-2.379999 -3.078,-4.518999 -4.6,-6.806999c-0.960999,-1.438 -1.921,-2.924999 -3.043,-4.529999c-0.406,-0.581001 -0.99,-1.385 -1.684,-2.136002c-0.537,-0.577 -1.564,-1.595999 -1.427,-2.203999c0.346,-1.539001 4.026,-0.458 4.729,0c0.356,0.233 0.64,0.682999 0.975,1.035999c0.92,0.98 1.925,2.07 2.847,3.044001c-0.115,-3.870001 -0.065001,-9.158001 -0.065001,-13.73c0,-1.96 -0.344999,-4.596 1.491,-4.73c0.994,-0.074 1.937,0.656 2.204,1.425c0.285999,0.814 0.128,2.03 0.128,3.109c0,3.085 0.337,6.325 0.26,9.261c1.984999,0.247 4.417999,0.492001 6.543999,0.712c0.771,0.083 1.575001,0.041 2.202,0.197001c1.194,0.292999 2.612001,0.967001 2.654001,2.006001c0.136,3.383999 -0.469,7.202 -0.868,10.563999c-0.201,1.679001 -1.052999,3.004999 -2.045,4.009001c-0.958,0.970001 -2.289,1.780998 -3.889,1.945999z"/>
+                        </svg>
+                        <span>{{profile_user.referrals.length || '0'}}</span>
+                    </div>
+                </div>
+            </tab>-->
+            <tab heading="fanatics" select="hideFeed()">
+                <div class="fanatics row"
+                popover-trigger="mouseenter" popover-placement="top" popover="This is a feed of all the people that are following YOU! Check out other Fanatics profiles, and give them a follow back! ">
+                    <div class="col-xs-12 col-sm-6 col-md-2"
+                         ng-repeat="fan in profile_user.fanatics_list" ui-sref="profile.view({view: fan.id})">
+                        <div class="thumbnail">
+                            <div class="pro-overlay">
+                                <img class="img"
+                                     ng-src="{{serverProtocal}}://{{serverURL}}/media/{{fan.img}}"/>
+                            </div>
+                            <a style="position:relative;display:block;" href class="pro-overlay" ui-sref="profile.view({view: $parent.fan.id})">
+                                <div class="pro-overlay-text">
+                                    <div class="name">
+                                        {{fan.first_name}} {{fan.last_name}}
+                                    </div>
+                                    <div class="location">
+                                        {{professional.location}}
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </tab>
+        </tabset>
+        </span>
+        <!-- /.filters -->
+        <div ng-if="feed.show" entry-feed ng-model="$parent.$parent.feed"></div>
+        </div><!-- /.container -->
+        <div ng-include="'/fanatics/index.html'"></div>
+</div><!-- /#profile -->

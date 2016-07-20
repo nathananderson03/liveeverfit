@@ -1,0 +1,53 @@
+<div id="groupsBg"></div>
+<div id="groups" ng-controller="groupsController">
+    <div class="container" ng-if="group">
+        <!--<div class="header">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12 col-md-6">
+                    <h2 class="ef-header">{{group}}</h2>
+                </div>
+            </div>
+        </div>-->
+        <div class="meta-banner">
+            <img src="groups/img/{{group}}.png" 
+            popover-trigger="mouseenter" popover-placement="bottom" popover="We rounded up other Fanatics with the same interests!  Share experiences, best practices, and make some new friends! All are welcome!"
+            onerror='this.style.display = "none"'/>
+        </div>
+    <tabset justified="true" type="pills">
+        <tab heading="feed" select="filter('')" active="$parent.$parent.feedActive"></tab>
+        <tab heading="fanatics" select="getFanatics()">
+            <div class="fanatics row">
+                <div class="col-xs-12 col-sm-6 col-md-2"
+                     ng-repeat="fan in fanatics" ui-sref="profile.view({view: fan.id})">
+                    <div class="thumbnail">
+                        <div class="pro-overlay">
+                            <img class="img"
+                                 ng-src="{{serverProtocal}}://{{serverURL}}/media/{{fan.img}}"/>
+                        </div>
+                        <a href class="pro-overlay" ui-sref="profile.view({view: $parent.fan.id})">
+                            <div class="pro-overlay-text">
+                                <div class="name">
+                                    {{fan.first_name}} {{fan.last_name}}
+                                </div>
+                                <div class="location">
+                                    {{professional.location}}
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </tab>
+        <tab heading="texts" select="filter('text')"></tab>
+        <tab heading="photos" select="filter('photo')"></tab>
+        <tab heading="videos" select="filter('video')"></tab>
+        <tab heading="blogs" select="filter('blog')"></tab>
+        <tab heading="events" select="filter('event')"></tab>
+    </tabset>
+    <!-- /.filters -->
+    <div ng-if="feed.show" entry-feed ng-model="$parent.$parent.feed"></div>
+
+    </div>
+    <!-- /.container -->
+    <div ng-include="'/fanatics/index.html'"> </div>
+</div><!-- /#profile -->

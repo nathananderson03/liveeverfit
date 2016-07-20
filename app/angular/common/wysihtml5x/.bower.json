@@ -1,0 +1,36 @@
+{
+  "name": "wysihtml5x",
+  "version": "0.4.4",
+  "main": [
+    "dist/wysihtml5x-0.4.3.min.js",
+    "dist/wysihtml5x-0.4.3-toolbar.min.js"
+  ],
+  "dependencies": {},
+  "homepage": "https://github.com/Edicy/wysihtml5",
+  "authors": [
+    "edicy",
+    "xing"
+  ],
+  "description": "wysihtml5x is an extended and less strict approach on xing/wysihtml5 open source rich text editor based on HTML5 technology.",
+  "keywords": [
+    "wysiwyg"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "build",
+    "examples",
+    "test",
+    "Makefile",
+    "src"
+  ],
+  "_release": "0.4.4",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.4.4",
+    "commit": "aa7ebc7abb3212f1942f4c59b9a163c69f694300"
+  },
+  "_source": "git://github.com/Edicy/wysihtml5.git",
+  "_target": "0.4.4",
+  "_originalSource": "wysihtml5x"
+}

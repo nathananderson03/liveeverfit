@@ -1,0 +1,35 @@
+<div id="contactBg"></div>
+<div id="contact" ng-controller="contactFormCtrl">
+    <div class="container">
+        <div class="col-sm-3 col-md-5 col-sm-3 hidden-xs"></div>
+        <div class="col-md-7 col-sm-9">
+            <div class="panel-xl">
+                <h3 class="ef-header">
+                    contact
+                </h3>
+                <div class="form-style">
+                    <form class="form-horizontal" method="post" name="contactUsForm">
+                        <!--<label for="Name" ng-model="name">
+                            Name
+                        </label>-->
+                        <input type="text" class="form-control placeholder-light" name="firstName" id="Name" placeholder="Name" ng-model="name" required>
+                        <p></p>
+                        <!--<label for="Email" ng-model="email">
+                            Email
+                        </label>-->
+                        <input type="email" class="form-control placeholder-light" name="email" id="email" placeholder="Email" ng-model="email" required>
+                        <p></p>
+                        <!--<label for="msg" ng-model="message">Message</label>-->
+                        <textarea ng-model="message" type="text" class="form-control placeholder-light" name="msg" id="msg" placeholder="Write message" cols="20" rows="5" required></textarea>
+                        <p></p>
+                        <button ng-click="submit(contactUsForm.$valid)"class="btn pull-right" type="submit">
+                            Submit <i class="fa fa-chevron-right"></i>
+                        </button>
+                        <span class="clearfix"></span>
+                    </form>
+                </div>
+            </div>
+        </div>
+     </div>
+    <div ng-include="'/fanatics/index.html'"> </div>
+</div>

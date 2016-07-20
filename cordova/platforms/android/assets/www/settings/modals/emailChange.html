@@ -1,0 +1,16 @@
+<form class="form-horizontal" name="certificationForm">
+    <div class="modal-header">
+        <h3 class="modal-title">Change Email</h3>
+    </div>
+    <div class="modal-body">
+        <alert ng-repeat="(error, msg) in message" type="success" close="closeAlert(error)">{{msg[0]}}</alert>
+        <label for="name">
+            Email
+        </label>
+        <input type="text" class="form-control" name="name" id="name" ng-model="email" required>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success" type="submit" ng-click="ok(email)">save</button>
+        <button class="btn btn-danger" ng-click="cancel()">cancel</button>
+    </div>
+</form>

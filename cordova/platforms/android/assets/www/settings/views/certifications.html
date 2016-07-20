@@ -1,0 +1,36 @@
+<h3 class="ef-header">
+    certifications
+    <button class="btn btn-primary pull-right" data-toggle="modal" ng-click="addCertification()"
+            data-target="#certificationModal"><span
+            class="glyphicon glyphicon glyphicon-plus"></span> add certification
+    </button>
+</h3>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="panel">
+                    <div class="panel-heading bold">
+                        Certification Name
+                        <span class="pull-right">Certification Number</span>
+                    </div>
+                    <ul id="certifications" class="list-group">
+                        <div ng-repeat="certification in profile_user.certifications" 
+                            <li  id="certification-{{ certification.pk }}" class="list-group-item">
+                                <span>
+                                    {{ certification.certification_name }}
+                                </span>
+                                <button type="button" class="close" style="margin-left: 15px;" ng-click="deleteCertification(certification)">
+                                    ×
+                                </button>
+                                <span class="badge">
+                                      {{ certification.certification_number }}
+                                </span>
+                            </li>
+                       
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

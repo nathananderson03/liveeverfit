@@ -1,0 +1,93 @@
+/* Evergreen Styles */
+#evergreenPage {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow-y: scroll;
+  a {
+    color:#efefef;
+  }
+}
+#evergreen-wrapper {
+  background:url('/evergreen/img/bckd-evergreen.jpg') no-repeat center center;
+  min-height: 100%;
+  width: 100%;
+  background-size: cover;
+}
+.evergreen-bckd {
+  position:relative;
+  margin:0 auto;
+  max-width: 700px;
+  height: 690px;
+  background:url('/evergreen/img/bckd-evergreen-content.png') no-repeat center center;
+  -webkit-background-size: cover;
+  -moz-background-size: 100% auto;
+  -o-background-size: cover;
+  background-size: cover;
+  margin-bottom: 230px;
+}
+.evergreen-text {
+  position:absolute;
+  top:90%;
+  left:10%;
+  right: 10%;
+  transform: rotate(-15deg);
+  -ms-transform: rotate(-15deg); /* IE 9 */
+  -webkit-transform: rotate(-15deg); /* Safari and Chrome */
+  color:#d4e1b2;
+}
+@media(min-width:768px) {
+  .evergreen-bckd {
+    position:relative;
+    margin:0 auto;
+    width: auto;
+    max-width: 1076px;
+    height: 1043px;
+    background:url('/evergreen/img/bckd-evergreen-content.png') no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: 100% auto;
+    -o-background-size: cover;
+    background-size: cover;
+    margin-bottom:70px;
+  }
+  .evergreen-text {
+    position:absolute;
+    top:20%;
+    left: auto;
+    right:10%;
+    width:400px;
+    transform: rotate(-15deg);
+    -ms-transform: rotate(-15deg); /* IE 9 */
+    -webkit-transform: rotate(-15deg); /* Safari and Chrome */
+    color:#d4e1b2;
+  }
+}
+
+.first-cap {
+  font-size:2.5em;
+  font-weight: bold;
+  line-height: 1em;
+}
+
+.evergreen-footer {
+  color:#8e9c6a;
+  text-align: center;
+}
+
+.evergreen-btn {
+  background:url('/evergreen/img/btn-evergreen.png') no-repeat;
+  display: block;
+  line-height: 40px;
+  min-height: 70px;
+}
+@media(min-width:768px) {
+  .evergreen-btn {
+    width:70px;
+  }
+}
+
+.evergreen-btn:hover {
+  background-position:0 -70px;
+}

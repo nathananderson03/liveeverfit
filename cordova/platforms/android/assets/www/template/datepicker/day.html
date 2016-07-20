@@ -1,0 +1,44 @@
+<table role="grid" aria-labelledby="{{uniqueId}}-title" aria-activedescendant="{{activeDateId}}">
+    <thead>
+    <tr>
+        <th colspan="1" ng-show="showWeeks"></th>
+        <th>
+            <button type="button" class="btn btn-sm" ng-click="move(-1)" tabindex="-1">
+                &NonBreakingSpace;<i class="fa fa-chevron-left"></i>&NonBreakingSpace;
+            </button>
+        </th>
+        <th colspan="1"></th>
+        <th colspan="{{2 + showWeeks}}">
+            <button id="{{uniqueId}}-title" role="heading" aria-live="assertive" aria-atomic="true" type="button"
+                    class="btn btn-sm" ng-click="toggleMode()" tabindex="-1" style="width:100%;"><strong>{{title}}</strong>
+            </button>
+        </th>
+        <th colspan="1"></th>
+        <th colspan="1">
+            <button type="button" class="btn btn-sm" ng-click="move(1)" tabindex="-1">
+                &NonBreakingSpace;<i class="fa fa-chevron-right"></i>&NonBreakingSpace;
+            </button>
+        </th>
+        <th colspan="1" ng-show="showWeeks"></th>
+    </tr>
+    <tr>
+        <th ng-show="showWeeks" class="text-center"></th>
+        <th ng-repeat="label in labels track by $index" class="text-center">
+            <small aria-label="{{label.full}}">{{label.abbr}}</small>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="row in rows track by $index">
+        <td ng-show="showWeeks" class="text-center h6 " style="padding: 0 8px;"><em>{{ weekNumbers[$index] }}</em></td>
+        <td ng-repeat="dt in row track by dt.date" class="text-center" role="gridcell" id="{{dt.uid}}"
+            aria-disabled="{{!!dt.disabled}}">
+            <button type="button" style="width:100%;" class="btn btn-sm"
+                    ng-class="{'btn-info': dt.selected, active: isActive(dt)}" ng-click="select(dt.date)"
+                    ng-disabled="dt.disabled" tabindex="-1">
+                <span ng-class="{'text-muted': dt.secondary, 'text-info': dt.current}">{{dt.label}}</span>
+            </button>
+        </td>
+    </tr>
+    </tbody>
+</table>

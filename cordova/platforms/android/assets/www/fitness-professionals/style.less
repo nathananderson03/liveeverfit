@@ -1,0 +1,288 @@
+#F.btn.toggle {
+  color: #ffffff;
+  border: 1px solid #ff0066;
+  background-color: #ff0066;
+}
+
+#F.btn.toggle:focus {
+  background-color: #ff0066;
+}
+
+#F.btn.toggle.selected {
+  background-color: #e2004f;
+  -webkit-box-shadow: 0 0 5px #ff0066;
+  box-shadow: 0 0 5px #ff0066;
+}
+
+#F.btn.toggle.selected:active {
+  -webkit-box-shadow: 0 0 5px #ff0066;
+  box-shadow: 0 0 5px #ff0066;
+}
+
+#F.btn.toggle:hover {
+  background-color: #ee0063;
+}
+
+.btn:focus, a:focus {
+  outline: none;
+}
+
+.form-control:focus {
+  border-color: #1a8cff;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(26, 140, 255, 0.5);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(26, 140, 255, 0.5);
+}
+
+.search-filters {
+  padding: 20px 0;
+}
+
+.search-filters .form {
+  border-bottom: 1px solid #eaeaea;
+  padding-bottom: 20px;
+}
+
+.form-space {
+  margin-bottom: 5px;
+}
+
+.trainer-search {
+  position: absolute;
+  top: 73px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.google-map {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 150px;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .google-map {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    height: 100%;
+    width: 40%;
+  }
+}
+
+.google-map > .angular-google-map {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.angular-google-map-container {
+  height: 100%;
+}
+
+.thumbnail > img {
+  width: 100%;
+  cursor: pointer;
+}
+
+.sidebar {
+  position: absolute;
+  top: 150px;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (min-width: 768px) {
+  .sidebar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 60%;
+  }
+}
+
+.sidebar-bg {
+  background-image: url('workouts/img/workouts_bg.jpg');
+  background-repeat: no-repeat;
+  background-position: top right;
+  background-attachment: fixed;
+  position: absolute;
+  top: 150px;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .sidebar-bg {
+    background-image: url('workouts/img/workouts_bg.jpg');
+    background-repeat: no-repeat;
+    background-position: top right;
+    background-attachment: fixed;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 60%;
+  }
+}
+
+.sidebar {
+  padding: 89px 13px 13px 13px;
+  .container-fluid {
+    background-color: rgba(250, 250, 250, .35);
+    padding-bottom: 21px;
+    margin-bottom: 13px;
+  }
+  .container-fluid:before {
+    background-image: url("common/img/container-logo.png");
+    width: 145px;
+    height: 27px;
+    position: absolute;
+    top: 21px;
+  }
+}
+
+.sidebar .thumbnail {
+  background: transparent;
+}
+
+.thumbnail {
+  border-color: #eaeaea;
+}
+
+.thumbnail:hover {
+  -webkit-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.2);
+}
+
+#trainer-results {
+  .pro-overlay {
+    width: 100%;
+    background: -moz-linear-gradient(top,  rgba(0,0,0,0) 30%, rgba(250, 250, 250, .9) 100%);
+    background: -webkit-linear-gradient(top,  rgba(0,0,0,0) 30%, rgba(250, 250, 250, .9) 100%);
+    background: -o-linear-gradient(top,  rgba(0,0,0,0) 30%, rgba(250, 250, 250, .9) 100%);
+    background: -ms-linear-gradient(top,  rgba(0,0,0,0) 30%, rgba(250, 250, 250, .9) 100%);
+    background: linear-gradient(to bottom,  rgba(0,0,0,0) 30%, rgba(250, 250, 250, .9) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#FF7d8790',GradientType=0 );
+    cursor:pointer;
+
+    .clients {
+      position: absolute;
+      top: 10px;
+      right: 25px;
+    }
+
+    img {
+      width:100%;
+    }
+
+    .pro-overlay-text {
+      position: absolute;
+      bottom: 27px;
+      left: 25px;
+      right: 0;
+      padding: 0px;
+      .name {
+        color: @ever-blue;
+        font-size: 14px;
+      }
+      .location {
+        color: @brand-primary;
+        font-size: 13px;
+
+      }
+      .profession {
+        color: @brand-primary;
+        font-size: 13px;
+
+      }
+
+    }
+  }
+}
+
+
+.custom-info-window {
+  background: rgba(145, 153, 162, 0.37);
+  color: white;
+  padding: 3px;
+  border-radius: 4px;
+  width: 256px!important;
+  height: 256px;
+  margin-top: -320px;
+  margin-left: -128px;
+  box-sizing: border-box;
+  img:not(.img) {
+    z-index: 2;
+  }
+  .closeBg {
+    background: rgba(250, 250, 250, 0.3);
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    border-radius: 4px;
+    right: 4px;
+    top: 4px;
+  }
+  .img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  .glyphicon {
+    color: #1a8cff;
+    position: absolute;
+    background-color: #ffffff;
+    font-size: 24px;
+    right: -10px;
+    top: -10px;
+    border-radius: 100px;
+    font-family: 'Glyphicons Halflings';
+  }
+  .pro-overlay {
+    top: 3px;
+    right: 3px;
+    bottom: 3px;
+    left: 3px;
+    position: absolute;
+    background: -moz-linear-gradient(top,  rgba(0,0,0,0) 30%, rgba(250, 250, 250, .9) 100%);
+    background: -webkit-linear-gradient(top,  rgba(0,0,0,0) 30%, rgba(250, 250, 250, .9) 100%);
+    background: -o-linear-gradient(top,  rgba(0,0,0,0) 30%, rgba(250, 250, 250, .9) 100%);
+    background: -ms-linear-gradient(top,  rgba(0,0,0,0) 30%, rgba(250, 250, 250, .9) 100%);
+    background: linear-gradient(to bottom,  rgba(0,0,0,0) 30%, rgba(250, 250, 250, .9) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#FF7d8790',GradientType=0 );
+    .pro-overlay-text {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 5px;
+      .name {
+        color: #1a8cff;
+        font-size: 18px;
+      }
+      .location {
+        color: #797878;
+        font-size: 14px;
+        padding: 3px 5px;
+      }
+      .profession {
+        color: #1a8cff;
+        font-size: 14px;
+        float: right;
+        padding: 0px 3px;
+      }
+    }
+  }
+}

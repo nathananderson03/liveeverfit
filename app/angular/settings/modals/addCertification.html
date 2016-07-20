@@ -1,0 +1,28 @@
+<form class="form-horizontal">
+    <div class="modal-header">
+        <h3 class="modal-title">Add Certification</h3>
+    </div>
+
+    <div class="modal-body">
+        <alert ng-repeat="(error, msg) in message" type="danger" close="closeAlert(error)">{{msg[0]}}</alert>
+        <label for="certificationName">
+            Certification Name
+        </label>
+        <input type="text" class="form-control" name="name" id="certificationName" placeholder="Certification Name"
+               ng-model="certifications.certification_name">
+
+        <p></p>
+        <label for="numberName">
+            Certification Number
+        </label>
+        <input type="text" class="form-control" name="number" id="numberName" placeholder="Certification Number"
+               ng-model="certifications.certification_number">
+
+        <p></p>
+        
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success" type="submit" ng-click="ok(certificationForm.$valid)">save</button>
+        <button class="btn btn-danger" ng-click="cancel()">cancel</button>
+    </div>
+</form>

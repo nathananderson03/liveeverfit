@@ -1,0 +1,245 @@
+<div class="row" ng-controller="feedController">
+	        		<div class="col-md-4">
+			        	<div class="status-update">
+                            <form class="input-box {{entryInputType}}">
+                                <div ng-show="!entryInputText" class="place-holder" ng-bind-html="entryInputPlaceHolder"></div>
+                                <div ng-input
+                                     class="input"
+                                     role="textbox"
+                                     contenteditable
+                                     ng-model="entryInputText"
+                                     ng-enter="entrySubmit()"></div>
+                                <div class="photo" ng-if="entryInputType=='photo'">
+                                    <div ng-if="!entryImgSrc&&!percent" class="upload">
+                                        <div class="well well-lg" ng-file-drop="onFileSelect($files)"
+                                             ng-file-drag-over-class="over">
+                                            <i class="fa fa-arrow-down fa-2x"></i>
+                                            <br>
+
+                                            <div>drag & drop</div>
+                                        </div>
+                                    <span class="btn btn-primary">
+                                         upload from computer
+                                        <input id="upload" type="file" accept="image/*" class="upload"
+                                               ng-file-select="onFileSelect($files)">
+                                    </span>
+                                    </div>
+                                    <h3 ng-if="percent">Loading...</h3>
+                                    <progressbar ng-if="percent" class="progress-striped active" value="percent">
+                                        {{percent}}%
+                                    </progressbar>
+                                    <img ng-if="entryImgSrc" ng-src="{{entryImgSrc}}"/>
+                                </div>
+                                <div class="video" ng-if="entryInputType=='video'">
+                                    <div class="form-group">
+                                        <label>Paste YouTube URL here</label>
+                                        <input ng-model="$parent.entryVideoURL" class="form-control" type="text"
+                                               placeholder="" ng-change="entryYouTubeChange()" required/>
+                                    </div>
+                                    <iframe ng-if="entryVideoURLID"
+                                            width="100%"
+                                            ng-src="{{entryVideoURLIDTrusted}}"
+                                            frameborder="0" allowfullscreen >
+                                    </iframe>
+                                </div>
+                                <div class="event" ng-if="entryInputType=='event'">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <div class="form-group">
+                                                <label for="eventStart">Start</label>
+
+                                                <div class="input-group">
+                                                    <input id="eventStart" type="text" class="form-control"
+                                                           datepicker-popup="MM/dd/yyyy"
+                                                           ng-model="entryEvent.start" min
+                                                           is-open="fromDatePickerOpened"
+                                                           date-disabled="disabled(date, mode)"
+                                                           show-button-bar="false" required/>
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-primary" ng-click="openFromDatePicker($event)">
+                                                            <i class="fa fa-calendar"></i>&ZeroWidthSpace;
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div collapse="entryEvent.allDay">
+                                                <div ng-model="entryEvent.start" ng-change="changed()">
+                                                    <timepicker></timepicker>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <div class="form-group">
+                                                <label for="eventEnd">End</label>
+
+                                                <div class="input-group">
+                                                    <input id="eventEnd" type="text" class="form-control"
+                                                           datepicker-popup="MM/dd/yyyy"
+                                                           ng-model="entryEvent.end"
+                                                           is-open="untilDatePickerOpened"
+                                                           date-disabled="disabled(date, mode)"
+                                                           show-button-bar="false" required/>
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-primary" ng-click="openUntilDatePicker($event)">
+                                                            <i class="fa fa-calendar"></i>&ZeroWidthSpace;
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div collapse="entryEvent.allDay">
+                                                <div ng-model="entryEvent.end" ng-change="changed()">
+                                                    <timepicker></timepicker>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>
+                                            <input type="checkbox" ng-model="entryEvent.allDay">
+                                            All-Day
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="blog" ng-show="entryInputType=='blog'" rich-text-editor ng-model="entryBlogBody"></div>
+                                <button ng-click="entrySubmit()" class="btn btn-primary btn-sm pull-right">share</button>
+                                <span class="clearfix"></span>
+                            </form>
+                            <div class="row">
+                                <div class="col-xs-offset-1 col-xs-2">
+                                    <a href ng-click="selectEntryInputType('text')">
+                                        <i class="fa fa-pencil fa-2x"></i><br>Text
+                                    </a>
+                                </div>
+                                <div class="col-xs-2">
+                                    <a href ng-click="selectEntryInputType('photo')">
+                                        <i class="fa fa-camera-retro fa-2x"></i><br>Photo
+                                    </a>
+                                </div>
+                                <div class="col-xs-2">
+                                    <a href ng-click="selectEntryInputType('video')">
+                                        <i class="fa fa-play-circle fa-2x"></i><br>Video
+                                    </a>
+                                </div>
+                                <div class="col-xs-2">
+                                    <a href ng-click="selectEntryInputType('blog')">
+                                        <i class="fa fa-edit fa-2x"></i><br>Blog
+                                    </a>
+                                </div>
+                                <div class="col-xs-2">
+                                    <a href ng-click="selectEntryInputType('event')">
+                                        <i class="fa fa-calendar fa-2x"></i><br>Event
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+		        	</div>
+
+		        	<div class="col-md-4">
+			        	<div ng-repeat="entry in feedList">
+							<div class="post-outer">
+								<div class="post-inner">
+							        <div class="post-header">
+							            <a class="post-settings" href="#"><i class="fa fa-cog fa-lg pull-right"></i></a>
+							            <div class="row">
+							            	<div class="col-md-2">
+							            		<img ng-src="{{entry.profile_img}}" class="img-rounded">
+							            	</div>
+							            	<div class="col-md-10">
+							            		<span class="posted-by"><a href="#">{{entry.first_name}} {{entry.last_name}}</a></span><br>
+							            		<span class="timestamp">shared {{entry.created |  date : longDate }}</span>
+							            	</div>
+							            </div>
+							        </div>
+							        <button ng-if="entry.user == user_id" class="close" ng-click="deleteEntry($index, entry)">x</button><br>
+							        <button class="close" ng-click="flagEntry(entry)">flag</button>
+							        <div ng-switch="entry.type">
+										
+										<div ng-switch-when="text"> 
+											Text
+											{{entry.text}}
+										
+										</div>
+										<div ng-switch-when="photo"> 
+											photo
+											{{entry.text}}
+											<img ng-src="/media/{{entry.img}}" >
+										</div>
+										<div ng-switch-when="video"> 
+											video
+											{{entry.video}}
+											<!-- <div class="videoWrapper">
+									            <iframe width="560" height="315" src="/media/{{entry.video}}" frameborder="0" allowfullscreen=""></iframe>
+									        </div> -->
+										</div>
+										<div ng-switch-when="event"> 
+											event
+											Text: {{entry.text}}<br>
+											Start time:{{entry.start}}<br>
+											Stop time:{{entry.end}}<br>
+										</div>
+										<div ng-switch-when="blog"> 
+											blog
+										</div>
+							            <div ng-switch-when="entry"> 
+											Text: {{entry.text}}<br>
+										</div>
+							            
+							        </div>
+							        
+							        
+							        
+							        <div class="post-social">
+							        	<i class="fa fa-thumbs-up fa pull-right">{{entry.likes}}</i>
+							        </div>
+
+
+							        <div class="comments">
+							            <div class="comment-form row">
+							                <div class="col-md-2 col-xs-2">
+							                    <img ng-src="{{entry.profile_img}}" class="img-rounded">
+							                </div>
+							                <div class="col-md-10 col-xs-10">
+							                    <div >
+							                        <input  class="form-control" ng-enter="submitComment(entry)" placeholder="Encourage, motivate, inspire" ng-model="commentInput">
+							                  	</div>
+							                  	<div ng-hide="entry.comments.length">No comments found</div>
+												<div ng-repeat="comment in entry.comments" class="list-group-item" >
+													<button class="close" ng-click="deleteComment($index, comment, entry)">x</button>
+													
+						                            <div class="media">
+						                                <img class="media-object pull-left"
+						                                     ng-src="{{comment.img}}"
+						                                     style="width: 36px; height: 36px;">
+
+						                                <div class="media-body">
+						                                    <div class="col-xs-12 col-sm-9">
+						                                        <b class="blue">{{comment.first_name}} {{comment.last_name}}</b><br>
+						                                         {{comment.text}}
+						                                        <div style="color: #FFFFFF">
+						                                            {{ comment.created | date:'fullDate'}}
+						                                            at {{comment.created | date: 'shortTime'}}
+						                                        </div>
+						                                    </div>
+						                                </div>
+						                            </div>
+						                        </div>
+
+							                </div>
+							            </div>
+							        </div><!-- ./comments -->
+								</div>
+							</div><!-- /.post-outer -->
+						</div>
+
+		        	</div>
+
+		            <div class="col-md-4">
+
+		            	
+		            
+		            </div><!-- ./col-md-4 -->
+	        	
+	        	</div><!-- /row-fluid -->
+	        
+

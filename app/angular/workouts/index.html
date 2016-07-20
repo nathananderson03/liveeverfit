@@ -1,0 +1,232 @@
+<div id="workoutsBg"></div>
+<div id="workouts" ng-controller="workoutsController">
+<div class="container">
+<div class="row">
+<div class="col-xs-12">
+<h2 id="workoutsHeader" class="ef-header">
+    professional workouts
+</h2>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-6">
+        <div class="row">
+            <div class="col-xs-10">
+                <tags-input ng-model="videoSearch" class="bootstrap placeholder-light"
+                            placeholder="Type a fitness category here..."
+                            name="pattern" value="" display-property="name"
+                            on-tag-removed="onDeleteTag($tag)" on-tag-added="onTagAdd($tag)" replace-spaces-with-dashes="false">
+                    <auto-complete source="loadVideoTitles($query)" min-length="1"></auto-complete>
+                </tags-input>
+            </div>
+            <button id="searchButton" ng-click="filter()" type="button" class="btn btn-default">
+                <span class="fa fa-chevron-right"></span>
+            </button>
+        </div>
+        <div class="page-header">
+            <h2 class="entry-title">sort by level of fitness</h2>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-6 col-lg-4">
+                <div class="form-space">
+                    <button class="col-xs-12 btn toggle beginner difficulties"
+                            ng-class="{selected: isBeginner == false}" id='beginner'
+                            ng-click="difficultyOnClick('beginner')">
+                        <span class="difficulty beginner"></span>beginner
+                    </button>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-6 col-lg-4">
+                <div class="form-space">
+                    <button class="col-xs-12 btn toggle intermediate difficulties"
+                            ng-class="{selected: isIntermediate == false}"
+                            id='intermediate'
+                            ng-click="difficultyOnClick('intermediate')">
+                        <span class="difficulty intermediate"></span>intermediate
+                    </button>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-6 col-lg-4">
+                <div class="form-space">
+                    <button class="col-xs-12 btn toggle advanced difficulties"
+                            ng-class="{selected: isAdvanced == false}" id='advanced'
+                            ng-click="difficultyOnClick('advanced')">
+                        <span class="difficulty advanced"></span>advanced
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+        <div class="page-header" style="margin-top: 0px;">
+            <h2 class="entry-title" style="margin-top: 0px;">sort by popular categories</h2>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                            <span ng-repeat="tag in tags.results"
+                                  class="tag tag-blue tag-click"
+                                  ng-click="addTag(tag)">
+                                {{tag.name}}
+                            </span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-header">
+    <h2 class="entry-title">workout videos</h2>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-6">
+        <div class="col-xs-6 col-lg-4" ng-repeat="video in videos">
+            <div class="ef-workout-video">
+                <a ui-sref="workouts.video(video)"><img
+                        ng-src="{{serverProtocal}}://{{serverURL}}/media/{{ video.img }}"/></a>
+            </div>
+            <a ui-sref="workouts.video(video)">
+                <div class="workout-title">
+                    <span class="ellipsis">{{ video.title }}</span>
+                    <span class="difficulty {{ video.difficulty }} pull-right"></span>
+                </div>
+            </a>
+        </div>
+        <button ng-show="next" id="showMore" type="button" class="btn btn-primary btn-lg btn-block"
+                ng-click="getPros()">Show More
+        </button>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+        <div ng-switch="videoStatus" style="min-height: 650px;">
+            <div class="row">
+                <div ng-switch-default class="col-xs-12">
+                    <div class="workout-video-shadow">
+                        <video id="promoVideo"
+                                width="640" height="480"
+                               class="video-js vjs-default-skin vjs-big-play-centered vjs-lef" controls
+                               preload="auto"
+                               poster="http://beta.liveeverfit.com/media/promo-video.png"
+                               data-setup='{"techOrder": ["flash", "html5"]}'>
+                            <source ng-src='rtmp://54.236.203.1:1935/vod/_definst_/mp4:EVERFIT PROMO VIDEO 1.mp4'
+                                    type='rtmp/mp4'/>
+                            <source ng-src='http://54.236.203.1:1935/vod/content/EVERFIT PROMO VIDEO 1.mp4/playlist.m3u8'
+                                    type='video/mp4'/>
+                        </video>
+                    </div>
+                    <header class="page-header">
+                        <span class="blue">EverFit Promo Video</span>
+                        <br>
+                    </header>
+                </div>
+                <div ng-switch-when="loading" class="col-xs-12">
+                    Loading
+                </div>
+                <div ng-switch-when="difficultySelected" class="col-xs-12">
+                    <div class="workout-video-shadow">
+                        <video id="selectedVideo"
+                               width="640" height="480"
+                               class="video-js vjs-default-skin vjs-big-play-centered vjs-lef" controls
+                               preload="auto"
+                               data-setup='{"techOrder": ["flash", "html5"]}'>
+                            <source ng-src='{{video.rtmp_url}}'
+                                    type='rtmp/mp4'/>
+                            <source ng-src='{{video.http_url}}'
+                                    type='video/mp4'/>
+                        </video>
+                    </div>
+                    <header class="page-header">
+                        <span class="blue">{{video.title}}</span>
+                        <br>
+
+                        <div style="font-size: 14px;">
+                            <span class="pull-right"><i class="fa fa-thumbs-o-up blue"></i>&NonBreakingSpace;
+                                {{ video.likes }}
+                            </span>
+                            views: <span class="blue">{{video.views}}</span>
+                        </div>
+                    </header>
+                    <div class="row">
+                        <div class="col-xs-9">
+                                        <span ng-repeat="tag in video.video_tags"
+                                              class="tag tag-blue tag-click"
+                                              ng-click="addTag(tag)">
+                                            {{ video.video_tags }}
+                                        </span>
+                        </div>
+                        <div class=" col-xs-3">
+                            <button type="button" class="btn btn-primary" style="width: 100%"
+                                    ng-click="likeVideo()">
+                                <span ng-if="!video.user_likes">like</span>
+                                <span ng-if="video.user_likes">unlike</span>
+                                            <span class="fa"
+                                                  ng-class="{'fa-thumbs-o-up': (video.user_likes == false), 'fa-thumbs-o-down': (video.user_likes == true)}">
+                                            </span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row" style="padding: 21px 0;">
+                        <div class="col-xs-12">
+                            <span class="blue">{{ video.description }}</span>
+                        </div>
+                    </div>
+                    <div class="row" style="padding: 8px 0;" ng-if="commentNext">
+                        <div class="col-xs-12">
+                            <a href ng-click="getComments()">
+                                <i>Show older comments</i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="list-group">
+                                <div ng-hide="comments.length">No comments found</div>
+                                <div ng-repeat="comment in comments.slice().reverse()" class="list-group-item">
+                                    <div class="media">
+                                        <button class="close" ng-if="comment.user == user_id"
+                                                ng-click="deleteComment($index, comment)">
+                                            <i class="fa fa-times"></i>&ZeroWidthSpace;
+                                        </button>
+                                        <a ui-sref="profile.view({view: comment.user})">
+                                            <img class="media-object pull-left"
+                                                 ng-src="{{serverProtocal}}://{{serverURL}}/{{comment.img}}"
+                                                 style="width: 36px; height: 36px;">
+                                        </a>
+
+                                        <div class="media-body">
+                                            <div class="col-xs-12 col-sm-9">
+                                                <a ui-sref="profile.view({view: comment.user})">
+                                                <b class="blue">{{comment.first_name}} {{comment.last_name}}</b></a> {{comment.comment}}
+
+                                                <div style="color: #FFFFFF">
+                                                    {{ comment.pub_date | date:'fullDate'}}
+                                                    at {{comment.pub_date | date: 'shortTime'}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="list-group-item">
+                                    <div class="media">
+                                        <img class="media-object pull-left"
+                                             ng-src="{{serverProtocal}}://{{serverURL}}/{{usrImg}}"
+                                             style="width: 36px; height: 36px;">
+
+                                        <div class="media-body">
+                                            <label class="sr-only" for="videoComment">video comment</label>
+                                            <input id="videoComment"
+                                                   ng-model="commentText"
+                                                   placeholder="Comment here..."
+                                                   ng-enter="submitComment()"
+                                                   class="form-control col-xs-12 col-sm-12"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<div ng-include="'/fanatics/index.html'"> </div>
+</div>
+</div>

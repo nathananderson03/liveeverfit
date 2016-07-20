@@ -1,0 +1,117 @@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="row">
+            <div class="col-xs-12">
+                <span class="bold">
+                    <span class="fa fa-phone"></span> Phone Number:
+                </span>
+                <br ng-show="editable.$visible">
+                <span id="phone" class="edit-text" data-title="Phone Number"
+                      data-type="text" editable-text="profile_user.phone" e-form="editable">
+                    {{ profile_user.phone }}
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <span class="bold">
+                    <span class="fa fa-twitter"></span> Twitter:
+                </span>
+                <br ng-show="editable.$visible">
+                <span id="twitter" class="edit-text" data-title="Twitter Username"
+                      data-type="text" editable-text="profile_user.twitter" e-form="editable">
+                    {{ profile_user.twitter }}
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <span class="bold">
+                    &ThinSpace;&ThinSpace;<span class="fa fa-facebook"></span>&ThinSpace; Facebook Page:
+                </span>
+                <br ng-show="editable.$visible">
+                <span id="facebook" class="edit-text" data-title="Facebook Page"
+                      data-type="text" editable-text="profile_user.facebook" e-form="editable">
+                    {{ profile_user.facebook }}
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <span class="bold">
+                    <span class="fa fa-youtube"></span> Youtube:
+                </span>
+                <br ng-show="editable.$visible">
+                <span id="youtube" class="edit-text" data-title="Youtube Url"
+                      data-type="text" editable-text="profile_user.youtube" e-form="editable">
+                    {{ profile_user.youtube }}
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <span class="bold">
+                    <span class="fa fa-google-plus"></span> Google+:
+                </span>
+                <br ng-show="editable.$visible">
+                <span id="plus" class="edit-text" data-title="Google+ URL" data-type="text"
+                      editable-text="profile_user.plus" e-form="editable">
+                    {{ profile_user.plus }}
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <span class="bold">
+                    <span class="fa fa-linkedin"></span> LinkedIn:
+                </span>
+                <br ng-show="editable.$visible">
+                <span id="linkedin" class="edit-text" data-title="LinkedIn Profile URL"
+                      data-type="text" editable-text="profile_user.linkedin" e-form="editable">
+                    {{ profile_user.linkedin }}
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <span class="bold">
+                    <span class="fa fa-instagram"></span> Instagram:
+                </span>
+                <br ng-show="editable.$visible">
+                <span id="instagram" class="edit-text" data-title="Instagram Username"
+                      data-type="text" editable-text="profile_user.instagram" e-form="editable">
+                    {{ profile_user.instagram }}
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12"
+            popover-trigger="mouseenter" popover-placement="bottom" popover="This reflects the total dollar amount of purchases from Fanatics that shopped under your affiliate link.">
+                <span class="bold">
+                    <span class="fa fa-money"></span> Shopify Sales:
+                </span>
+                
+                <span id="bio" class="edit-text" data-title="total"
+                      data-type="text">
+                    {{ profile_user.shopify_sales.total_earned }}
+                    <div ng-if="!profile_user.shopify_sales.total_earned">Contact Administrator</div>
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12"
+            popover-trigger="mouseenter" popover-placement="bottom" popover="This number reflects the total number of folks who have signed up via your Affiliate/Referral link.">
+                <span class="bold">
+                    <span class="fa fa-empire"></span> Total Referrals:
+                </span>
+                
+                <span id="bio" class="edit-text" data-title="total"
+                      data-type="text">
+                    {{ profile_user.shopify_sales.total_customers }}
+                    <div ng-if="!profile_user.shopify_sales.total_customers || profile_user.shopify_sales.total_customers != 0 "><a href="mailto:info@liveeverfit.com">Contact Administrator</a></div>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
